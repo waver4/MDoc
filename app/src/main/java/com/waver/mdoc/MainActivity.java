@@ -3,6 +3,9 @@ package com.waver.mdoc;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,7 +28,22 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         bindViews();
+        initTabview();
 
+    }
+
+    //TabLayout+Fragment+ViewPager+FragmentViewPager组合的使用
+    private void initTabview() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new Fragment1());
+        fragments.add(new Fragment2());
+        fragments.add(new Fragment3());
+        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void bindViews() {
